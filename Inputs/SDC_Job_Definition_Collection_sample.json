@@ -1,0 +1,16 @@
+{
+	"connection_key": "response",
+	"result": true,
+	"redis_key": "abcdefg",
+	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
+	"JobDefinitionCollection": {
+		"ObjectID": "",
+        "JobID": "ADMINISTRATOR",
+        "JobName": "",
+        "ExpirationDate": ""
+	},
+	"api_schema": "JobDefinitionCollection",
+	"accepter": ["JobDefinitionCollection"],
+	"JobDefinition_code": "1",
+	"deleted": false
+}

@@ -1,0 +1,14 @@
+{
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-job-definition-reads/SAP_API_Caller/caller.go#L53",
+	"function": "sap-api-integrations-job-definition-reads/SAP_API_Caller.(*SAPAPICaller).JobDefinitionCollection",
+	"level": "INFO",
+	"message": [
+		{
+			"ObjectID": "00163E03A0701EE288B81E4C1984ABD0",
+			"JobID": "ADMINISTRATOR",
+			"JobName": "Administrator",
+			"ExpirationDate": "9999-12-31T09:00:00+09:00"
+		}
+	],
+	"time": "2022-05-27T18:36:12+09:00"
+}
