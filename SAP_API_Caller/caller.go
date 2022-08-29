@@ -26,14 +26,14 @@ func NewSAPAPICaller(baseUrl string, l *logger.Logger) *SAPAPICaller {
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetJobDefinition(jobID string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetJobDefinition(objectID, jobID string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "JobDefinitionCollection":
 			func() {
-				c.JobDefinitionCollection(jobID)
+				c.JobDefinitionCollection(objectID, jobID)
 				wg.Done()
 			}()
 		default:
@@ -44,8 +44,8 @@ func (c *SAPAPICaller) AsyncGetJobDefinition(jobID string, accepter []string) {
 	wg.Wait()
 }
 
-func (c *SAPAPICaller) JobDefinitionCollection(jobID string) {
-	data, err := c.callJobDefinitionSrvAPIRequirementJobDefinitionCollection("JobDefinitionCollection", jobID)
+func (c *SAPAPICaller) JobDefinitionCollection(objectID, jobID string) {
+	data, err := c.callJobDefinitionSrvAPIRequirementJobDefinitionCollection("JobDefinitionCollection", objectID, jobID)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -54,12 +54,12 @@ func (c *SAPAPICaller) JobDefinitionCollection(jobID string) {
 
 }
 
-func (c *SAPAPICaller) callJobDefinitionSrvAPIRequirementJobDefinitionCollection(api, jobID string) ([]sap_api_output_formatter.JobDefinitionCollection, error) {
+func (c *SAPAPICaller) callJobDefinitionSrvAPIRequirementJobDefinitionCollection(api, objectID, jobID string) ([]sap_api_output_formatter.JobDefinitionCollection, error) {
 	url := strings.Join([]string{c.baseURL, "c4codataapi", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithJobDefinitionCollection(req, jobID)
+	c.getQueryWithJobDefinitionCollection(req, objectID, jobID)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -80,8 +80,8 @@ func (c *SAPAPICaller) setHeaderAPIKeyAccept(req *http.Request) {
 	req.Header.Set("Accept", "application/json")
 }
 
-func (c *SAPAPICaller) getQueryWithJobDefinitionCollection(req *http.Request, jobID string) {
+func (c *SAPAPICaller) getQueryWithJobDefinitionCollection(req *http.Request, objectID, jobID string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("JobID eq '%s'", jobID))
+	params.Add("$filter", fmt.Sprintf("ObjectID eq '%s' and JobID eq '%s'", objectID, jobID))
 	req.URL.RawQuery = params.Encode()
 }

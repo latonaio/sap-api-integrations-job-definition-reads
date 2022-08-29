@@ -4,13 +4,13 @@
 	"redis_key": "abcdefg",
 	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
 	"JobDefinitionCollection": {
-		"ObjectID": "",
+		"ObjectID": "00163E03A0701EE288B81E4C1984ABD0",
         "JobID": "ADMINISTRATOR",
         "JobName": "",
         "ExpirationDate": ""
 	},
-	"api_schema": "JobDefinitionCollection",
+	"api_schema": "JobDefinition",
 	"accepter": ["JobDefinitionCollection"],
-	"JobDefinition_code": "1",
+	"JobDefinition_code": "ADMINISTRATOR",
 	"deleted": false
 }

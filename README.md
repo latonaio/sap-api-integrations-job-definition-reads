@@ -31,6 +31,7 @@ sap-api-integrations-job-definition-reads において、API への値入力条�
 
 ### SDC レイアウト
 
+* inoutSDC.JobDefinitionCollection.ObjectID（対象ID）
 * inoutSDC.JobDefinitionCollection.JobID（ジョブID）
 
 ## SAP API Bussiness Hub の API の選択的コール
@@ -44,9 +45,9 @@ accepter において 下記の例のように、データの種別（＝APIの�
 ここでは、"JobDefinitionCollection" が指定されています。    
   
 ```
-	"api_schema": "JobDefinitionCollection",
+	"api_schema": "JobDefinition",
 	"accepter": ["JobDefinitionCollection"],
-	"jobdefinition_code": "1",
+	"JobDefinition_code": "ADMINISTRATOR",
 	"deleted": false
 ```
   
@@ -55,9 +56,9 @@ accepter において 下記の例のように、データの種別（＝APIの�
 全データを取得する場合、sample.json は以下のように記載します。  
 
 ```
-	"api_schema": "JobDefinitionCollection",
+	"api_schema": "JobDefinition",
 	"accepter": ["All"],
-	"jobdefinition_code": "1",
+	"JobDefinition_code": "ADMINISTRATOR",
 	"deleted": false
 ```
 
@@ -67,14 +68,14 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetJobDefinition(jobID string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetJobDefinition(objectID, jobID string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "JobDefinitionCollection":
 			func() {
-				c.JobDefinitionCollection(jobID)
+				c.JobDefinitionCollection(objectID, jobID)
 				wg.Done()
 			}()
 		default:
